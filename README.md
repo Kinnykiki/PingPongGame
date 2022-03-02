@@ -1,2 +1,2 @@
-# PingPong game is a game that is a game it is no a gam its a game
+# PingPong game is a game that is a game it is not a gam its a game
 
