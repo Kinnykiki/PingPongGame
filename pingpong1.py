@@ -42,20 +42,23 @@ class Player2(GameSprite):
 
 class Poo(GameSprite):
     def update(self):
-        if self.rect.y > 0  and self.rect.y < 400:
-            self.rect.y -= self.speed
-        if self.rect.x > 0  and self.rect.x < 600:
-            self.rect.x -= self.speed
+        pass
 
 
 
-kin1 = Player1("fyb.png",0,20,75,100,100)
+kin1 = Player1("fyb.png",0,200,75,100,100)
 kin2 = Player2("fyb.png",600,200,75,100,100)
-Poos = Poo('POO.png',300,200, randint(5,12),100,100)
-
+Poos = Poo('POO.png',300,200, randint(5,12),50,50)
+speed_x = 3
+speed_y = 3
 
 game = True
 finish = False
+font.init()
+font1 = font.SysFont('Arial', 35)
+lose1 = font1.render("PLAYER 1 LOSE AWWWWW", True, (180, 0, 0))
+font2 = font.SysFont('Arial', 35)
+lose2 = font1.render("PLAYER 2 LOSE HAHAHA", True, (180, 0, 0))
 
 while game: 
     for e in event.get():
@@ -64,15 +67,27 @@ while game:
     if finish == False:
         window.blit(background,(0,0))
         if sprite.collide_rect(kin1, Poos):
-            Poos.speed = Poos.speed * -1
+            speed_x = randint(-20,-10)
+            speed_x *= -1
         if sprite.collide_rect(kin2, Poos):
-            Poos.speed = Poos.speed * -1
-    window.blit(background,(0,0))
-    kin1.reset()
-    kin1.update()
-    kin2.reset()
-    kin2.update()
-    Poos.reset()
-    Poos.update()
-    time.delay(15)
-    display.update( )
+            speed_x = randint(10,20)
+            speed_x *= -1
+        Poos.rect.x += speed_x
+        Poos.rect.y += speed_y
+        if Poos.rect.y > 450 or Poos.rect.y < 0:
+            speed_y *= -1
+        if Poos.rect.x < -100   :
+            finish = True
+            window.blit(lose1, (200,200))
+        if Poos.rect.x > 700:
+            finish = True
+            window.blit(lose2, (200,200))
+        #window.blit(background,(0,0))
+        kin1.reset()
+        kin1.update()
+        kin2.reset()
+        kin2.update()
+        Poos.reset()
+        Poos.update()
+        time.delay(15)
+        display.update( )
